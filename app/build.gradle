@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.squareup.sqldelight'
+
+android {
+  compileSdkVersion compileSdk
+  buildToolsVersion buildTools
+
+  defaultConfig {
+    applicationId "org.wen.gank"
+
+    targetSdkVersion targetSdk
+    minSdkVersion minSdk
+
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  packagingOptions {
+    exclude 'META-INF/rxjava.properties'
+  }
+}
+
+dependencies {
+  compile libraries.supportAppCompat
+  compile libraries.supportRecyclerView
+  compile libraries.supportDesign
+  compile libraries.supportCardView
+  compile libraries.supportConstraint
+
+  compile libraries.dagger
+  annotationProcessor libraries.daggerCompiler
+  provided libraries.daggerAnnotation
+
+  compile libraries.rxJava
+  compile libraries.rxAndroid
+
+  compile libraries.timber
+  compile libraries.retrofit
+  compile libraries.retrofitConvertMoshi
+  compile libraries.retrofitAdapterRxJava
+
+  compile libraries.okhttp
+  compile libraries.okhttpLogInterceptor
+  compile libraries.sqlbrite
+
+  compile libraries.butterknife
+  annotationProcessor libraries.butterknifeCompiler
+
+  compile libraries.glide
+  compile libraries.multiType
+
+  testCompile libraries.junit
+  testCompile libraries.mockito
+  testCompile libraries.robolectric
+}

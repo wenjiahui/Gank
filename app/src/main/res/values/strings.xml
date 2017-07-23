@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Gank</string>
+    <string name="main_title">Gank.io</string>
+    <string name="main_search">搜索</string>
+</resources>
