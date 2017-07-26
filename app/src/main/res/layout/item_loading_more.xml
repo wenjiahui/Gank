@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/load_error"
+        android:text="出错啦, 点击加载"
         android:visibility="gone"
         tools:visibility="visible"
         />
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/load_more"
+        android:text="点击加载更多"
         android:visibility="gone"
         tools:visibility="visible"
         />
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/load_end"
+        android:text="全部数据已加载完毕"
         android:visibility="gone"
         tools:visibility="visible"
         />

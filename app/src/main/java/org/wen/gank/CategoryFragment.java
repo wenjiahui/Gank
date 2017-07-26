@@ -99,7 +99,8 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull GankViewHolder holder, @NonNull final Gank item) {
+            protected void onBindViewHolder(@NonNull GankViewHolder holder,
+                @NonNull final Gank item) {
                 holder.titleView.setText(item.description());
                 holder.titleView.setOnClickListener(new View.OnClickListener() {
                     @Override
