@@ -1,4 +1,4 @@
-package org.wen.gank.base;
+package org.wen.gank.mvp;
 
 import android.os.Bundle;
 

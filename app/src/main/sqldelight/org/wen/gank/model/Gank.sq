@@ -1,0 +1,27 @@
+import java.util.List;
+
+CREATE TABLE gank(
+  _id TEXT NOT NULL,
+  url TEXT NOT NULL,
+  type TEXT,
+  description TEXT,
+  who TEXT,
+  images TEXT as List<String>,
+  used INTEGER AS Boolean DEFAULT 0,
+  createdAt TEXT,
+  updatedAt TEXT,
+  publishedAt TEXT
+);
+
+selectAll:
+select * from gank;
+
+selectAllByCategory:
+select * from gank where type = ? limit 50;
+
+clearByCategory:
+delete from gank where type = ?;
+
+insertRow:
+insert into gank(_id, url, type, description, who,  images, used, createdAt, updatedAt, publishedAt)
+values(? , ?, ?, ?, ?, ?, ?, ?, ?, ?);

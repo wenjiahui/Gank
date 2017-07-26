@@ -2,4 +2,7 @@
     <string name="app_name">Gank</string>
     <string name="main_title">Gank.io</string>
     <string name="main_search">搜索</string>
+    <string name="load_error">出错啦, 点击加载</string>
+    <string name="load_more">点击加载更多</string>
+    <string name="load_end">全部数据已加载完毕</string>
 </resources>

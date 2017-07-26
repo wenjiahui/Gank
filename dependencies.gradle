@@ -50,6 +50,11 @@ ext {
               okio                 : "1.13.0",
               timber               : "4.5.1",
               sqlbrite             : "2.0.0",
+              autoValue            : "1.4.1",
+              autoValueAnnotation  : "1.4",
+              autoValueMoshi       : "0.4.3",
+              autoValueWith        : "1.0.0",
+              autoValueParcel      : "0.2.5",
 
 
               glide                : "3.7.0",
@@ -59,44 +64,51 @@ ext {
               daggerAnnotation     : "1.0",]
 
   libraries =
-      [supportAnnotations   : "com.android.support:support-annotations:${versions.supportVersion}",
-       supportV4            : "com.android.support:support-v4:${versions.supportVersion}",
-       supportAppCompat     : "com.android.support:appcompat-v7:${versions.supportVersion}",
-       supportRecyclerView  : "com.android.support:recyclerview-v7:${versions.supportVersion}",
-       supportDesign        : "com.android.support:design:${versions.supportVersion}",
-       supportCardView      : "com.android.support:cardview-v7:${versions.supportVersion}",
-       supportGridLayout    : "com.android.support:gridlayout-v7:${versions.supportVersion}",
-       supportMultidex      : "com.android.support:multidex:${versions.supportMultidex}",
-       supportConstraint    : "com.android.support.constraint:constraint-layout:${versions.supportConstraint}",
+      [supportAnnotations      : "com.android.support:support-annotations:${versions.supportVersion}",
+       supportV4               : "com.android.support:support-v4:${versions.supportVersion}",
+       supportAppCompat        : "com.android.support:appcompat-v7:${versions.supportVersion}",
+       supportRecyclerView     : "com.android.support:recyclerview-v7:${versions.supportVersion}",
+       supportDesign           : "com.android.support:design:${versions.supportVersion}",
+       supportCardView         : "com.android.support:cardview-v7:${versions.supportVersion}",
+       supportGridLayout       : "com.android.support:gridlayout-v7:${versions.supportVersion}",
+       supportMultidex         : "com.android.support:multidex:${versions.supportMultidex}",
+       supportConstraint       : "com.android.support.constraint:constraint-layout:${versions.supportConstraint}",
 
 
-       butterknife          : "com.jakewharton:butterknife:${versions.butterknife}",
-       butterknifeCompiler  : "com.jakewharton:butterknife-compiler:${versions.butterknife}",
-       timber               : "com.jakewharton.timber:timber:${versions.timber}",
+       butterknife             : "com.jakewharton:butterknife:${versions.butterknife}",
+       butterknifeCompiler     : "com.jakewharton:butterknife-compiler:${versions.butterknife}",
+       timber                  : "com.jakewharton.timber:timber:${versions.timber}",
 
-       retrofit             : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-       retrofitConvertGson  : "com.squareup.retrofit2:converter-gson:${versions.retrofitConvertGson}",
-       retrofitConvertMoshi : "com.squareup.retrofit2:converter-moshi:${versions.retrofitConvertMoshi}",
-       retrofitAdapterRxJava: "com.squareup.retrofit2:adapter-rxjava:${versions.retrofitAdapterRxJava}",
-       okhttp               : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
-       okhttpLogInterceptor : "com.squareup.okhttp3:logging-interceptor:${versions.okhttpLogInterceptor}",
-       okio                 : "com.squareup.okio:okio:${versions.okio}",
-       sqlbrite             : "com.squareup.sqlbrite2:sqlbrite:${versions.sqlbrite}",
+       retrofit                : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+       retrofitConvertGson     : "com.squareup.retrofit2:converter-gson:${versions.retrofitConvertGson}",
+       retrofitConvertMoshi    : "com.squareup.retrofit2:converter-moshi:${versions.retrofitConvertMoshi}",
+       retrofitAdapterRxJava   : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofitAdapterRxJava}",
+       okhttp                  : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
+       okhttpLogInterceptor    : "com.squareup.okhttp3:logging-interceptor:${versions.okhttpLogInterceptor}",
+       okio                    : "com.squareup.okio:okio:${versions.okio}",
+       sqlbrite                : "com.squareup.sqlbrite2:sqlbrite:${versions.sqlbrite}",
 
-       gson                 : "com.google.code.gson:gson:${versions.gson}",
-       rxJava               : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
-       rxAndroid            : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
+       autoValue               : "com.google.auto.value:auto-value:${versions.autoValue}",
+       autoValueAnnotation     : "com.jakewharton.auto.value:auto-value-annotations:${versions.autoValueAnnotation}",
+       autoValueMoshi          : "com.ryanharter.auto.value:auto-value-moshi:${versions.autoValueMoshi}",
+       autoValueWith           : "com.gabrielittner.auto.value:auto-value-with:${versions.autoValueWith}",
+       autoValueParcel         : "com.ryanharter.auto.value:auto-value-parcel-adapter:${versions.autoValueParcel}",
+       autoValueMoshiAnnotation: "com.ryanharter.auto.value:auto-value-moshi-annotations:${versions.autoValueMoshi}",
 
-       glide                : "com.github.bumptech.glide:glide:${versions.glide}",
-       multiType            : "me.drakeet.multitype:multitype:${versions.multitype}",
+       gson                    : "com.google.code.gson:gson:${versions.gson}",
+       rxJava                  : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
+       rxAndroid               : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
 
-       junit                : "junit:junit:${versions.junit}",
-       mockito              : "org.mockito:mockito-core:${versions.mockito}",
+       glide                   : "com.github.bumptech.glide:glide:${versions.glide}",
+       multiType               : "me.drakeet.multitype:multitype:${versions.multitype}",
 
-       robolectric          : "org.robolectric:robolectric:${versions.robolectric}",
-       robolectricMultiDex  : "org.robolectric:shadows-multidex:${versions.robolectric}",
+       junit                   : "junit:junit:${versions.junit}",
+       mockito                 : "org.mockito:mockito-core:${versions.mockito}",
 
-       dagger               : "com.google.dagger:dagger:${versions.dagger}",
-       daggerCompiler       : "com.google.dagger:dagger-compiler:${versions.dagger}",
-       daggerAnnotation     : "javax.annotation:jsr250-api:${versions.daggerAnnotation}",]
+       robolectric             : "org.robolectric:robolectric:${versions.robolectric}",
+       robolectricMultiDex     : "org.robolectric:shadows-multidex:${versions.robolectric}",
+
+       dagger                  : "com.google.dagger:dagger:${versions.dagger}",
+       daggerCompiler          : "com.google.dagger:dagger-compiler:${versions.dagger}",
+       daggerAnnotation        : "javax.annotation:jsr250-api:${versions.daggerAnnotation}",]
 }
