@@ -7,9 +7,8 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    app:popupTheme="@style/Widget.AppCompat.Light.PopupMenu"
-    app:titleTextColor="@color/text_white"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     tools:title="@string/main_title"
-    style="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     />
 
