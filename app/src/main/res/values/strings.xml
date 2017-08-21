@@ -8,4 +8,5 @@
     <string name="action_share">分享</string>
     <string name="action_open_with_browser">用浏览器打开</string>
     <string name="action_share_to">分享到...</string>
+    <string name="title_main_my_collection">我的收藏</string>
 </resources>

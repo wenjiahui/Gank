@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setTitle(R.string.main_title);
         }
-        
+
         CommonTabAdapter tabAdapter =
             new CommonTabAdapter.Builder(this, getSupportFragmentManager()).add(
                 CategoryFragment.ANDROID, CategoryFragment.getInstance(CategoryFragment.ANDROID))
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_search) {
             Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.menu_collection) {
+            CollectionsActivity.navigato(this);
         }
         return super.onOptionsItemSelected(item);
     }
