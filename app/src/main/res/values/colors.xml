@@ -11,4 +11,6 @@
 
     <color name="color_tab_indicator">#FFFF8C</color>
 
+    <color name="divider">#e6e6e6</color>
+
 </resources>

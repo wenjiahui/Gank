@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
+import butterknife.BindColor;
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.squareup.sqlbrite2.BriteDatabase;
@@ -27,6 +29,7 @@ import org.wen.gank.model.Gank;
 import org.wen.gank.model.GankModel;
 import org.wen.gank.mvp.MvpFragment;
 import org.wen.gank.tools.LoadMoreDelegate;
+import org.wen.gank.widgets.DividerItemDecoration;
 import timber.log.Timber;
 
 /**
@@ -55,6 +58,9 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindColor(R.color.divider) int dividerColor;
+    @BindDimen(R.dimen.divider) int dividerHeight;
+
     private String category;
     private int pageStart = 1;
 
@@ -82,6 +88,7 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
     protected void initView(View view) {
         ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(dividerColor, dividerHeight));
         adapter = new MultiTypeAdapter(new ArrayList<>());
         adapter.register(Gank.class, new CategoryItemProvider());
         recyclerView.setAdapter(adapter);
