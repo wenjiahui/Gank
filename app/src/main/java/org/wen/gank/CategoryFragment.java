@@ -4,14 +4,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +20,6 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import me.drakeet.multitype.ItemViewBinder;
 import me.drakeet.multitype.MultiTypeAdapter;
 import org.wen.gank.api.GankApi;
 import org.wen.gank.api.HttpResult;
@@ -88,28 +83,7 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
         ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new MultiTypeAdapter(new ArrayList<>());
-        adapter.register(Gank.class, new ItemViewBinder<Gank, GankViewHolder>() {
-            @NonNull
-            @Override
-            protected GankViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-                @NonNull ViewGroup parent) {
-                View itemView =
-                    inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-                return new GankViewHolder(itemView);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull GankViewHolder holder,
-                @NonNull final Gank item) {
-                holder.titleView.setText(item.description());
-                holder.titleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        WebViewActivity.go(getContext(), item.url(), item.description());
-                    }
-                });
-            }
-        });
+        adapter.register(Gank.class, new CategoryItemProvider());
         recyclerView.setAdapter(adapter);
         loadMoreDelegate = new LoadMoreDelegate().adapter(adapter)
             .listen(new LoadMoreDelegate.OnLoadMoreListener() {
@@ -211,15 +185,5 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
                     loadMoreDelegate.loadError(throwable);
                 }
             });
-    }
-
-    class GankViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView titleView;
-
-        public GankViewHolder(View itemView) {
-            super(itemView);
-            titleView = (TextView) itemView.findViewById(android.R.id.text1);
-        }
     }
 }

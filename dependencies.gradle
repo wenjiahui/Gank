@@ -15,7 +15,7 @@ ext {
   targetCompatVer = JavaVersion.VERSION_1_7
 
   plugin_versions = [versions  : "0.15.0",
-                     gradle    : "3.0.0-beta2",
+                     gradle    : "3.0.0-beta6",
                      dexcount  : "0.7.3",
                      packer    : "1.0.9",
                      sqldelight: "0.6.1",]
