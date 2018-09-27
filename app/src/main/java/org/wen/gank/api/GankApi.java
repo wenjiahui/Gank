@@ -1,6 +1,6 @@
 package org.wen.gank.api;
 
-import org.wen.gank.model.GankModel2;
+import org.wen.gank.model.GankModel;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ import retrofit2.http.Path;
 public interface GankApi {
 
     @GET("/api/data/{category}/{count}/{start}")
-    Observable<HttpResult<List<GankModel2>>> getCategoryDatas(@Path("category") String category,
-                                                              @Path("start") int start, @Path("count") int count);
+    Observable<HttpResult<List<GankModel>>> getCategoryDatas(@Path("category") String category,
+                                                             @Path("start") int start, @Path("count") int count);
 }

@@ -4,9 +4,9 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 
-import org.wen.gank.model.GankModel2;
+import org.wen.gank.model.GankModel;
 
-@Database(entities = {GankModel2.class}, version = AppDatabase.version)
+@Database(entities = {GankModel.class}, version = AppDatabase.version)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

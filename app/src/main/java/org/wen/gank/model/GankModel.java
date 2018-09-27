@@ -7,15 +7,14 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 @Entity(tableName = "gank")
-public class GankModel2 {
-
+public class GankModel {
 
     @NonNull
     @PrimaryKey
-    private String id;
+    private String _id;
     private String url;
     private String type;
-    private String description;
+    private String desc;
     private String who;
     private List<String> images;
     private Boolean used;
@@ -24,11 +23,11 @@ public class GankModel2 {
     private String publishedAt;
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getUrl() {
@@ -47,12 +46,12 @@ public class GankModel2 {
         this.type = type;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getWho() {

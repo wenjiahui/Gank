@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import org.wen.gank.api.GankApi;
 import org.wen.gank.api.HttpResult;
-import org.wen.gank.model.GankModel2;
+import org.wen.gank.model.GankModel;
 import org.wen.gank.mvp.MvpFragment;
 import org.wen.gank.tools.AppDatabase;
 import org.wen.gank.tools.LoadMoreDelegate;
@@ -95,7 +95,7 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(dividerColor, dividerHeight));
         adapter = new MultiTypeAdapter(new ArrayList<>());
-        adapter.register(GankModel2.class, new CategoryItemProvider());
+        adapter.register(GankModel.class, new CategoryItemProvider());
         recyclerView.setAdapter(adapter);
         loadMoreDelegate = new LoadMoreDelegate().adapter(adapter).listen(new LoadMoreDelegate.OnLoadMoreListener() {
             @Override
@@ -117,9 +117,9 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
         super.onLazyLoad();
 
         mDatabase.gankDao().getGanksLimit(category).take(1).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<GankModel2>>() {
+                .subscribe(new Consumer<List<GankModel>>() {
                     @Override
-                    public void accept(List<GankModel2> ganks) throws Exception {
+                    public void accept(List<GankModel> ganks) throws Exception {
                         adapter.setItems(ganks);
                         adapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(true);
@@ -131,19 +131,19 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
 
     private void loadData(final int start) {
         gankApi.getCategoryDatas(category, start, 15).subscribeOn(Schedulers.io())
-                .map(new Function<HttpResult<List<GankModel2>>, List<GankModel2>>() {
+                .map(new Function<HttpResult<List<GankModel>>, List<GankModel>>() {
                     @Override
-                    public List<GankModel2> apply(HttpResult<List<GankModel2>> result) throws Exception {
+                    public List<GankModel> apply(HttpResult<List<GankModel>> result) throws Exception {
                         return result.results;
                     }
-                }).doOnNext(new Consumer<List<GankModel2>>() {
+                }).doOnNext(new Consumer<List<GankModel>>() {
             @Override
-            public void accept(List<GankModel2> gankModel2s) throws Exception {
+            public void accept(List<GankModel> gankModel2s) throws Exception {
                 mDatabase.gankDao().batchinsert(gankModel2s);
             }
-        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<GankModel2>>() {
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<GankModel>>() {
             @Override
-            public void accept(List<GankModel2> ganks) throws Exception {
+            public void accept(List<GankModel> ganks) throws Exception {
                 if (start == 1) pageStart = 1;
                 pageStart++;
                 if (ganks.isEmpty()) {
