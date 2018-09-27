@@ -1,42 +1,42 @@
 package org.wen.gank;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
+
+import org.wen.gank.api.GankApi;
+import org.wen.gank.api.HttpResult;
+import org.wen.gank.model.Gank;
+import org.wen.gank.model.GankModel2;
+import org.wen.gank.mvp.MvpFragment;
+import org.wen.gank.tools.AppDatabase;
+import org.wen.gank.tools.LoadMoreDelegate;
+import org.wen.gank.widgets.DividerItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.squareup.sqlbrite2.BriteDatabase;
-import com.squareup.sqldelight.SqlDelightStatement;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
 import me.drakeet.multitype.MultiTypeAdapter;
-import org.wen.gank.api.GankApi;
-import org.wen.gank.api.HttpResult;
-import org.wen.gank.model.Gank;
-import org.wen.gank.model.GankModel;
-import org.wen.gank.mvp.MvpFragment;
-import org.wen.gank.tools.LoadMoreDelegate;
-import org.wen.gank.widgets.DividerItemDecoration;
 import timber.log.Timber;
 
 /**
  * created by Jiahui.wen 2017-07-23
  */
-public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresenter>
-    implements CategoryView {
+public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresenter> implements CategoryView {
 
     private static final String EXTRA_CATEGORY = "category";
 
@@ -52,14 +52,20 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
         return fragment;
     }
 
-    @Inject GankApi gankApi;
-    @Inject BriteDatabase database;
+    @Inject
+    GankApi gankApi;
+    @Inject
+    AppDatabase mDatabase;
 
-    @BindView(R.id.recyclerView) RecyclerView recyclerView;
-    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindColor(R.color.divider) int dividerColor;
-    @BindDimen(R.dimen.divider) int dividerHeight;
+    @BindColor(R.color.divider)
+    int dividerColor;
+    @BindDimen(R.dimen.divider)
+    int dividerHeight;
 
     private String category;
     private int pageStart = 1;
@@ -92,14 +98,12 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
         adapter = new MultiTypeAdapter(new ArrayList<>());
         adapter.register(Gank.class, new CategoryItemProvider());
         recyclerView.setAdapter(adapter);
-        loadMoreDelegate = new LoadMoreDelegate().adapter(adapter)
-            .listen(new LoadMoreDelegate.OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    loadData(pageStart);
-                }
-            })
-            .into(recyclerView);
+        loadMoreDelegate = new LoadMoreDelegate().adapter(adapter).listen(new LoadMoreDelegate.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                loadData(pageStart);
+            }
+        }).into(recyclerView);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -113,84 +117,50 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
     protected void onLazyLoad() {
         super.onLazyLoad();
 
-        SqlDelightStatement statement = Gank.FACTORY.selectAllByCategory(category);
-        database.createQuery(statement.tables, statement.statement, statement.args)
-            .mapToList(new Function<Cursor, Gank>() {
-                @Override
-                public Gank apply(Cursor cursor) throws Exception {
-                    return Gank.MAPPER.map(cursor);
-                }
-            })
-            .take(1)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Consumer<List<Gank>>() {
-                @Override
-                public void accept(List<Gank> ganks) throws Exception {
-                    adapter.setItems(ganks);
-                    adapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(true);
-                    loadData(1);
-                    Timber.d("load database cache with size: %d", ganks.size());
-                }
-            });
+        mDatabase.gankDao().getGanksLimit(category).take(1).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<GankModel2>>() {
+                    @Override
+                    public void accept(List<GankModel2> ganks) throws Exception {
+                        adapter.setItems(ganks);
+                        adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(true);
+                        loadData(1);
+                        Timber.d("load database cache with size: %d", ganks.size());
+                    }
+                });
     }
 
     private void loadData(final int start) {
-        gankApi.getCategoryDatas(category, start, 15)
-            .subscribeOn(Schedulers.io())
-            .map(new Function<HttpResult<List<Gank>>, List<Gank>>() {
-                @Override
-                public List<Gank> apply(HttpResult<List<Gank>> result) throws Exception {
-                    return result.results;
-                }
-            })
-            .doOnNext(new Consumer<List<Gank>>() {
-                @Override
-                public void accept(List<Gank> ganks) throws Exception {
-                    BriteDatabase.Transaction transaction = database.newTransaction();
-                    try {
-                        SQLiteDatabase db = database.getWritableDatabase();
-
-                        if (start == 1) {
-                            Gank.ClearByCategory clearAction = new GankModel.ClearByCategory(db);
-                            clearAction.bind(category);
-                            database.executeUpdateDelete(Gank.TABLE_NAME, clearAction.program);
-                        }
-
-                        Gank.InsertRow insertRow = new GankModel.InsertRow(db, Gank.FACTORY);
-                        for (Gank gank : ganks) {
-                            insertRow.bind(gank._id(), gank.url(), gank.type(), gank.description(),
-                                gank.who(), gank.images(), gank.used(), gank.createdAt(),
-                                gank.updatedAt(), gank.publishedAt());
-                            database.executeInsert(Gank.TABLE_NAME, insertRow.program);
-                        }
-
-                        transaction.markSuccessful();
-                    } finally {
-                        transaction.end();
+        gankApi.getCategoryDatas(category, start, 15).subscribeOn(Schedulers.io())
+                .map(new Function<HttpResult<List<GankModel2>>, List<GankModel2>>() {
+                    @Override
+                    public List<GankModel2> apply(HttpResult<List<GankModel2>> result) throws Exception {
+                        return result.results;
                     }
+                }).doOnNext(new Consumer<List<GankModel2>>() {
+            @Override
+            public void accept(List<GankModel2> gankModel2s) throws Exception {
+                mDatabase.gankDao().batchinsert(gankModel2s);
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<GankModel2>>() {
+            @Override
+            public void accept(List<GankModel2> ganks) throws Exception {
+                if (start == 1) pageStart = 1;
+                pageStart++;
+                if (ganks.isEmpty()) {
+                    loadMoreDelegate.loadEnd();
+                } else {
+                    loadMoreDelegate.loadFinish(ganks, start == 1);
                 }
-            })
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Consumer<List<Gank>>() {
-                @Override
-                public void accept(List<Gank> ganks) throws Exception {
-                    if (start == 1) pageStart = 1;
-                    pageStart++;
-                    if (ganks.isEmpty()) {
-                        loadMoreDelegate.loadEnd();
-                    } else {
-                        loadMoreDelegate.loadFinish(ganks, start == 1);
-                    }
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }, new Consumer<Throwable>() {
-                @Override
-                public void accept(Throwable throwable) throws Exception {
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
-                    loadMoreDelegate.loadError(throwable);
-                }
-            });
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+                loadMoreDelegate.loadError(throwable);
+            }
+        });
     }
 }
