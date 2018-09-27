@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import org.wen.gank.api.GankApi;
 import org.wen.gank.api.HttpResult;
-import org.wen.gank.model.Gank;
 import org.wen.gank.model.GankModel2;
 import org.wen.gank.mvp.MvpFragment;
 import org.wen.gank.tools.AppDatabase;
@@ -96,7 +95,7 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(dividerColor, dividerHeight));
         adapter = new MultiTypeAdapter(new ArrayList<>());
-        adapter.register(Gank.class, new CategoryItemProvider());
+        adapter.register(GankModel2.class, new CategoryItemProvider());
         recyclerView.setAdapter(adapter);
         loadMoreDelegate = new LoadMoreDelegate().adapter(adapter).listen(new LoadMoreDelegate.OnLoadMoreListener() {
             @Override

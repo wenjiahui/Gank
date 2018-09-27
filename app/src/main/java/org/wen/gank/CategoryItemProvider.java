@@ -6,14 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.wen.gank.model.GankModel2;
+
 import me.drakeet.multitype.ItemViewBinder;
-import org.wen.gank.model.Gank;
 
 /**
  * created by Jiahui.wen 2017-09-20
  */
 public class CategoryItemProvider
-    extends ItemViewBinder<Gank, CategoryItemProvider.GankViewHolder> {
+    extends ItemViewBinder<GankModel2, CategoryItemProvider.GankViewHolder> {
 
     @NonNull
     @Override
@@ -25,12 +27,12 @@ public class CategoryItemProvider
 
     @Override
     protected void onBindViewHolder(@NonNull CategoryItemProvider.GankViewHolder holder,
-        @NonNull final Gank item) {
-        holder.titleView.setText(item.description());
+        @NonNull final GankModel2 item) {
+        holder.titleView.setText(item.getDescription());
         holder.titleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.go(v.getContext(), item.url(), item.description());
+                WebViewActivity.go(v.getContext(), item.getUrl(), item.getDescription());
             }
         });
     }

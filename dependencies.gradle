@@ -14,19 +14,18 @@ ext {
     sourceCompatVer = JavaVersion.VERSION_1_7
     targetCompatVer = JavaVersion.VERSION_1_7
 
-    plugin_versions = [versions  : "0.15.0",
-                       gradle    : "3.0.0",
-                       dexcount  : "0.7.3",
-                       packer    : "1.0.9",
-                       sqldelight: "0.6.1",]
+    plugin_versions = [versions: "0.15.0",
+                       gradle  : "3.0.0",
+                       dexcount: "0.7.3",
+                       packer  : "1.0.9",
+    ]
 
 
     gradle_plugins =
-            [versions  : "com.github.ben-manes:gradle-versions-plugin:${plugin_versions.versions}",
-             gradle    : "com.android.tools.build:gradle:${plugin_versions.gradle}",
-             dexcount  : "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${plugin_versions.dexcount}",
-             packer    : "com.mcxiaoke.gradle:packer-ng:${plugin_versions.packer}",
-             sqldelight: "com.squareup.sqldelight:gradle-plugin:${plugin_versions.sqldelight}",]
+            [versions: "com.github.ben-manes:gradle-versions-plugin:${plugin_versions.versions}",
+             gradle  : "com.android.tools.build:gradle:${plugin_versions.gradle}",
+             dexcount: "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${plugin_versions.dexcount}",
+             packer  : "com.mcxiaoke.gradle:packer-ng:${plugin_versions.packer}",]
 
     versions = [supportVersion       : "27.1.1",
                 supportConstraint    : "1.1.2",
@@ -51,11 +50,6 @@ ext {
                 okio                 : "1.13.0",
                 timber               : "4.5.1",
                 sqlbrite             : "2.0.0",
-                autoValue            : "1.4.1",
-                autoValueAnnotation  : "1.4",
-                autoValueMoshi       : "0.4.3",
-                autoValueWith        : "1.0.0",
-                autoValueParcel      : "0.2.5",
 
 
                 glide                : "3.7.0",
@@ -91,13 +85,6 @@ ext {
              okhttpLogInterceptor    : "com.squareup.okhttp3:logging-interceptor:${versions.okhttpLogInterceptor}",
              okio                    : "com.squareup.okio:okio:${versions.okio}",
              sqlbrite                : "com.squareup.sqlbrite2:sqlbrite:${versions.sqlbrite}",
-
-             autoValue               : "com.google.auto.value:auto-value:${versions.autoValue}",
-             autoValueAnnotation     : "com.jakewharton.auto.value:auto-value-annotations:${versions.autoValueAnnotation}",
-             autoValueMoshi          : "com.ryanharter.auto.value:auto-value-moshi:${versions.autoValueMoshi}",
-             autoValueWith           : "com.gabrielittner.auto.value:auto-value-with:${versions.autoValueWith}",
-             autoValueParcel         : "com.ryanharter.auto.value:auto-value-parcel-adapter:${versions.autoValueParcel}",
-             autoValueMoshiAnnotation: "com.ryanharter.auto.value:auto-value-moshi-annotations:${versions.autoValueMoshi}",
 
              gson                    : "com.google.code.gson:gson:${versions.gson}",
              rxJava                  : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",

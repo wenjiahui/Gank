@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.squareup.sqldelight'
 
 android {
   compileSdkVersion compileSdk
@@ -63,14 +62,6 @@ dependencies {
 
   compile libraries.butterknife
   annotationProcessor libraries.butterknifeCompiler
-
-  annotationProcessor libraries.autoValue
-  provided libraries.autoValueAnnotation
-  annotationProcessor libraries.autoValueMoshi
-  provided libraries.autoValueMoshiAnnotation
-
-  annotationProcessor libraries.autoValueWith
-  annotationProcessor libraries.autoValueParcel
 
   compile libraries.glide
   compile libraries.multiType
