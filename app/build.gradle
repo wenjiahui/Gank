@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
   compileSdkVersion compileSdk
@@ -42,14 +45,15 @@ dependencies {
 
   compile libraries.room_runtime
   compile libraries.room_rxjava
-  annotationProcessor libraries.room_compiler
+  kapt libraries.room_compiler
 
   compile libraries.dagger
-  annotationProcessor libraries.daggerCompiler
+  kapt libraries.daggerCompiler
   provided libraries.daggerAnnotation
 
   compile libraries.rxJava
   compile libraries.rxAndroid
+  compile libraries.kotlin
 
   compile libraries.timber
   compile libraries.retrofit
@@ -59,9 +63,6 @@ dependencies {
   compile libraries.okhttp
   compile libraries.okhttpLogInterceptor
   compile libraries.sqlbrite
-
-  compile libraries.butterknife
-  annotationProcessor libraries.butterknifeCompiler
 
   compile libraries.glide
   compile libraries.multiType

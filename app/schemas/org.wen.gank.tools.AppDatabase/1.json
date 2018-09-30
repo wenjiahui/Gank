@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d64cac4e2aed0afb9a231d20d2ba7f5a",
+    "identityHash": "b73c674ade7c6c9489be7e3d878a0337",
     "entities": [
       {
         "tableName": "gank",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `url` TEXT, `type` TEXT, `desc` TEXT, `who` TEXT, `images` TEXT, `used` INTEGER, `createdAt` TEXT, `updatedAt` TEXT, `publishedAt` TEXT, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `url` TEXT, `type` TEXT, `desc` TEXT, `who` TEXT, `images` TEXT, `used` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT, `publishedAt` TEXT, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "_id",
@@ -48,7 +48,7 @@
             "fieldPath": "used",
             "columnName": "used",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "createdAt",
@@ -81,7 +81,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d64cac4e2aed0afb9a231d20d2ba7f5a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b73c674ade7c6c9489be7e3d878a0337\")"
     ]
   }
 }
