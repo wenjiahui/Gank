@@ -1,12 +1,12 @@
 package org.wen.gank.tools
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import me.drakeet.multitype.ItemViewBinder
 import me.drakeet.multitype.MultiTypeAdapter
 import org.wen.gank.R
@@ -44,7 +44,7 @@ class LoadMoreDelegate {
     this.recyclerView = recyclerView
     val layoutManager = this.recyclerView.layoutManager
     this.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-      override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         if (model.state == LoadMoreModel.STATE_END) return
 

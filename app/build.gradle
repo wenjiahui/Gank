@@ -15,7 +15,7 @@ android {
 
     versionCode 1
     versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     javaCompileOptions {
       annotationProcessorOptions {
@@ -37,36 +37,30 @@ android {
 }
 
 dependencies {
-  compile libraries.supportAppCompat
-  compile libraries.supportRecyclerView
-  compile libraries.supportDesign
-  compile libraries.supportCardView
-  compile libraries.supportConstraint
+  implementation libraries.supportAppCompat
+  implementation libraries.supportRecyclerView
+  implementation libraries.supportDesign
 
-  compile libraries.room_runtime
-  compile libraries.room_rxjava
+  implementation libraries.room_runtime
+  implementation libraries.room_rxjava
   kapt libraries.room_compiler
 
-  compile libraries.rxJava
-  compile libraries.rxAndroid
+  implementation libraries.rxJava
+  implementation libraries.rxAndroid
 
-  compile libraries.kotlin
-  compile libraries.koinCore
-  compile libraries.koinAndroid
+  implementation libraries.kotlin
+  implementation libraries.koinCore
+  implementation libraries.koinAndroid
 
-  compile libraries.timber
-  compile libraries.retrofit
-  compile libraries.retrofitConvertMoshi
-  compile libraries.retrofitAdapterRxJava
+  implementation libraries.timber
+  implementation libraries.retrofit
+  implementation libraries.retrofitConvertMoshi
+  implementation libraries.retrofitAdapterRxJava
 
-  compile libraries.okhttp
-  compile libraries.okhttpLogInterceptor
-  compile libraries.sqlbrite
+  implementation libraries.okhttp
+  implementation libraries.okhttpLogInterceptor
 
-  compile libraries.glide
-  compile libraries.multiType
+  implementation libraries.multiType
 
-  testCompile libraries.junit
-  testCompile libraries.mockito
-  testCompile libraries.robolectric
+  testImplementation libraries.junit
 }

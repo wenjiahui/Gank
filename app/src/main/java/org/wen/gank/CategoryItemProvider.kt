@@ -1,10 +1,10 @@
 package org.wen.gank
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import me.drakeet.multitype.ItemViewBinder
 import org.wen.gank.CategoryItemProvider.GankViewHolder
 import org.wen.gank.model.GankModel
@@ -20,8 +20,7 @@ class CategoryItemProvider : ItemViewBinder<GankModel, GankViewHolder>() {
     return GankViewHolder(itemView)
   }
 
-  override fun onBindViewHolder(holder: GankViewHolder,
-                                item: GankModel) {
+  override fun onBindViewHolder(holder: GankViewHolder, item: GankModel) {
     holder.titleView.text = item.desc
     holder.titleView.setOnClickListener { v -> WebViewActivity.go(v.context, item.url!!, item.desc!!) }
   }

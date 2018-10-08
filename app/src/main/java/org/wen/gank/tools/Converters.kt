@@ -1,7 +1,7 @@
 package org.wen.gank.tools
 
-import android.arch.persistence.room.TypeConverter
-import android.support.annotation.Keep
+import androidx.annotation.Keep
+import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import java.io.IOException
