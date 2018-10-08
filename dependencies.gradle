@@ -44,6 +44,7 @@ ext {
                 junit                : "4.12",
                 mockito              : "2.8.47",
                 kotlin               : "1.2.71",
+                koin                 : "1.0.1",
 
                 retrofitConvertGson  : "2.3.0",
                 retrofitConvertMoshi : "2.3.0",
@@ -58,8 +59,7 @@ ext {
                 glide                : "3.7.0",
                 multitype            : "3.4.4",
                 robolectric          : "3.3.2",
-                dagger               : "2.11",
-                daggerAnnotation     : "1.0",]
+    ]
 
     libraries =
             [supportAnnotations   : "com.android.support:support-annotations:${versions.supportVersion}",
@@ -93,6 +93,8 @@ ext {
              rxJava               : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
              rxAndroid            : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
              kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+             koinCore             : "org.koin:koin-core:${versions.koin}",
+             koinAndroid          : "org.koin:koin-android:${versions.koin}",
 
              glide                : "com.github.bumptech.glide:glide:${versions.glide}",
              multiType            : "me.drakeet.multitype:multitype:${versions.multitype}",
@@ -104,8 +106,5 @@ ext {
 
              robolectric          : "org.robolectric:robolectric:${versions.robolectric}",
              robolectricMultiDex  : "org.robolectric:shadows-multidex:${versions.robolectric}",
-
-             dagger               : "com.google.dagger:dagger:${versions.dagger}",
-             daggerCompiler       : "com.google.dagger:dagger-compiler:${versions.dagger}",
-             daggerAnnotation     : "javax.annotation:jsr250-api:${versions.daggerAnnotation}",]
+            ]
 }

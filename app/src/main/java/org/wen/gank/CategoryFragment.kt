@@ -6,12 +6,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_category.*
 import me.drakeet.multitype.MultiTypeAdapter
+import org.koin.android.ext.android.inject
 import org.wen.gank.api.GankApi
 import org.wen.gank.extensions.getCompatColor
 import org.wen.gank.extensions.getDimen
+import org.wen.gank.extensions.plusAssign
 import org.wen.gank.model.GankModel
 import org.wen.gank.mvp.MvpFragment
 import org.wen.gank.tools.AppDatabase
@@ -19,15 +22,14 @@ import org.wen.gank.tools.LoadMoreDelegate
 import org.wen.gank.widgets.DividerItemDecoration
 import timber.log.Timber
 import java.util.*
-import javax.inject.Inject
 
 /**
  * created by Jiahui.wen 2017-07-23
  */
 class CategoryFragment : MvpFragment<CategoryView, CategoryPresenter>(), CategoryView {
 
-  @Inject lateinit var gankApi: GankApi
-  @Inject lateinit var mDatabase: AppDatabase
+  private val gankApi: GankApi by inject()
+  private val mDatabase: AppDatabase by inject()
 
   override var layoutRes: Int = R.layout.fragment_category
 
@@ -39,10 +41,10 @@ class CategoryFragment : MvpFragment<CategoryView, CategoryPresenter>(), Categor
 
   private lateinit var adapter: MultiTypeAdapter
   private lateinit var loadMoreDelegate: LoadMoreDelegate
+  private lateinit var disposes: CompositeDisposable
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
-    App.from(context).appComponent!!.inject(this)
     category = arguments?.getString(EXTRA_CATEGORY, ANDROID) ?: ANDROID
     dividerColor = context.getCompatColor(R.color.divider)
     dividerHeight = context.getDimen(R.dimen.divider)
@@ -64,13 +66,15 @@ class CategoryFragment : MvpFragment<CategoryView, CategoryPresenter>(), Categor
       }
     }).into(recyclerView!!)
 
-    swipeRefreshLayout!!.setOnRefreshListener { loadData(1) }
+    swipeRefreshLayout.setOnRefreshListener { loadData(1) }
+
+    disposes = CompositeDisposable()
   }
 
   override fun onLazyLoad() {
     super.onLazyLoad()
 
-    mDatabase.gankDao().getGanksLimit(category).take(1).observeOn(AndroidSchedulers.mainThread())
+    val dispose = mDatabase.gankDao().getGanksLimit(category).take(1).observeOn(AndroidSchedulers.mainThread())
         .subscribe { ganks ->
           adapter.items = ganks
           adapter.notifyDataSetChanged()
@@ -78,10 +82,11 @@ class CategoryFragment : MvpFragment<CategoryView, CategoryPresenter>(), Categor
           loadData(1)
           Timber.d("load database cache with size: %d", ganks.size)
         }
+    disposes += dispose
   }
 
   private fun loadData(start: Int) {
-    gankApi.getCategoryDatas(category, start, 15).subscribeOn(Schedulers.io())
+    val dispose = gankApi.getCategoryDatas(category, start, 15).subscribeOn(Schedulers.io())
         .map { (_, results) -> results }.doOnNext { gankModels -> mDatabase.gankDao().batchInsert(gankModels) }.observeOn(AndroidSchedulers.mainThread()).subscribe({ ganks ->
           if (start == 1) pageStart = 1
           pageStart++
@@ -97,6 +102,12 @@ class CategoryFragment : MvpFragment<CategoryView, CategoryPresenter>(), Categor
           loadMoreDelegate.loadError(throwable)
           Timber.e(throwable)
         })
+    disposes += dispose
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    disposes.clear()
   }
 
   companion object {

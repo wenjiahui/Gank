@@ -47,13 +47,12 @@ dependencies {
   compile libraries.room_rxjava
   kapt libraries.room_compiler
 
-  compile libraries.dagger
-  kapt libraries.daggerCompiler
-  provided libraries.daggerAnnotation
-
   compile libraries.rxJava
   compile libraries.rxAndroid
+
   compile libraries.kotlin
+  compile libraries.koinCore
+  compile libraries.koinAndroid
 
   compile libraries.timber
   compile libraries.retrofit
