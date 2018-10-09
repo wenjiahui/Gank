@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.squareup.sqldelight'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
   compileSdkVersion compileSdk
@@ -13,7 +15,14 @@ android {
 
     versionCode 1
     versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = ["room.schemaLocation":
+                             "$projectDir/schemas".toString()]
+      }
+    }
   }
   buildTypes {
     release {
@@ -28,43 +37,30 @@ android {
 }
 
 dependencies {
-  compile libraries.supportAppCompat
-  compile libraries.supportRecyclerView
-  compile libraries.supportDesign
-  compile libraries.supportCardView
-  compile libraries.supportConstraint
+  implementation libraries.supportAppCompat
+  implementation libraries.supportRecyclerView
+  implementation libraries.supportDesign
 
-  compile libraries.dagger
-  annotationProcessor libraries.daggerCompiler
-  provided libraries.daggerAnnotation
+  implementation libraries.room_runtime
+  implementation libraries.room_rxjava
+  kapt libraries.room_compiler
 
-  compile libraries.rxJava
-  compile libraries.rxAndroid
+  implementation libraries.rxJava
+  implementation libraries.rxAndroid
 
-  compile libraries.timber
-  compile libraries.retrofit
-  compile libraries.retrofitConvertMoshi
-  compile libraries.retrofitAdapterRxJava
+  implementation libraries.kotlin
+  implementation libraries.koinCore
+  implementation libraries.koinAndroid
 
-  compile libraries.okhttp
-  compile libraries.okhttpLogInterceptor
-  compile libraries.sqlbrite
+  implementation libraries.timber
+  implementation libraries.retrofit
+  implementation libraries.retrofitConvertMoshi
+  implementation libraries.retrofitAdapterRxJava
 
-  compile libraries.butterknife
-  annotationProcessor libraries.butterknifeCompiler
+  implementation libraries.okhttp
+  implementation libraries.okhttpLogInterceptor
 
-  annotationProcessor libraries.autoValue
-  provided libraries.autoValueAnnotation
-  annotationProcessor libraries.autoValueMoshi
-  provided libraries.autoValueMoshiAnnotation
+  implementation libraries.multiType
 
-  annotationProcessor libraries.autoValueWith
-  annotationProcessor libraries.autoValueParcel
-
-  compile libraries.glide
-  compile libraries.multiType
-
-  testCompile libraries.junit
-  testCompile libraries.mockito
-  testCompile libraries.robolectric
+  testImplementation libraries.junit
 }
